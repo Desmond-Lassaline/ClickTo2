@@ -7,51 +7,126 @@
     <style>
         body {
             text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        main {
             padding: 50px;
-            font-family: Arial, sans-serif;
         }
 
         button {
-            font-size: 20px;
-            padding: 10px 20px;
+            font-size: 24px;
+            padding: 15px 30px;
             cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.1s;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #777;
+            transition: background-color 0s;
         }
 
         #clickCount {
-            font-size: 24px;
+            font-size: 28px;
             margin-top: 20px;
+        }
+
+        section {
+            display: none;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .toggleButton {
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<h1 id="gameTitle">Click to 10</h1>
+<header>
+    <h1 id="gameTitle">Click to 10</h1>
+</header>
 
-<button id="clickButton" onclick="clickHandler()">Click me!</button>
-<p id="clickCount">Click count: 0</p>
+<main>
+    <button id="clickButton" onclick="clickHandler()">Click me!</button>
+    <p id="clickCount">Click count: 0</p>
+
+    <button class="toggleButton" onclick="toggleInfo()">Toggle Information</button>
+
+    <section id="infoSection">
+        <h2>About Click to 10</h2>
+        <p>
+            Click to 10 is an exciting clicking game where your goal is to click the button 10 times. Once you reach 10 clicks,
+            you can start the sequel, Click to 100. Try to reach 100 clicks in the sequel for the ultimate achievement!
+        </p>
+    </section>
+</main>
 
 <script>
     let clickCount = 0;
+    let infoVisible = false;
+    let sequelStarted = false;
 
     function clickHandler() {
         clickCount++;
 
         document.getElementById("clickCount").innerText = "Click count: " + clickCount;
 
-        if (clickCount === 10) {
+        if (clickCount === 10 && !sequelStarted) {
+            document.getElementById("gameTitle").innerText = "Start Click to 100";
             document.getElementById("clickButton").innerText = "Start Click to 100";
             document.getElementById("clickButton").onclick = startSequel;
-            document.getElementById("gameTitle").innerText = "Click to 100";
         }
     }
 
     function startSequel() {
+        sequelStarted = true;
         clickCount = 0;
+        document.getElementById("gameTitle").innerText = "Click to 100";
         document.getElementById("clickButton").innerText = "Click me!";
         document.getElementById("clickCount").innerText = "Click count: " + clickCount;
 
         alert("Welcome to Click to 100! Click to reach 100.");
-        document.getElementById("gameTitle").innerText = "Click to 100";
 
         document.getElementById("clickButton").onclick = function () {
             clickCount++;
@@ -63,8 +138,13 @@
             }
         };
     }
+
+    function toggleInfo() {
+        const infoSection = document.getElementById("infoSection");
+        infoVisible = !infoVisible;
+        infoSection.style.display = infoVisible ? "block" : "none";
+    }
 </script>
 
 </body>
 </html>
-
